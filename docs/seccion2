@@ -13,6 +13,8 @@ El package main indica a Go que es el punto de entrada de la app que estamos con
 
 Un modulo es un proyecto Go que puede tener multiples packages
 go mod init $path
+ejemplo:
+go mod init github.com/maxirobledo/curso-go
 El $path es la ruta donde se puede encontrar el modulo. Por ejemplo: github.com/maxirobledo/curso-go
 Esto creara el file go.mod
 
