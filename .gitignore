@@ -1,6 +1,6 @@
 # Binarios
 *.exe
-/bin/
+bin/
 
 # IDE
 .vscode/
