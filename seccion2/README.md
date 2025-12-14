@@ -72,8 +72,13 @@ Una vez definido el módulo, se puede crear un **archivo ejecutable** de Go para
 ```bash
 go build
 ```
+Este comando genera un binario con el nombre del módulo o del directorio actual (`.exe` en Windows).
 
-Este comando genera un binario en el directorio actual (por ejemplo, `.exe` en Windows).
+Dejar el archivo ejecutable en un path especifico
+
+```bash
+go build -o bin/seccion2 ./seccion2
+```
 
 ---
 
@@ -129,4 +134,45 @@ var activo bool     // false
 
 ---
 
+## Funciones
+
+Una **funcion** es un bloque de codigo bajo demanda que se ejecuta en el momento en que se la llama.
+
+La definicion de funciones personalizadas se realiza por debajo del bloque de la funcion **main**
+
+```go
+func main(){
+
+    ...
+
+}
+
+func miFuncion(parametro1 tipoParametro1, parametro2 tipoParametro2, ...) tipeRetorno {
+
+    ....
+
+    return 
+}
+
+```
+
+Ejemplo
+
+```go
+
+func sumaEnteros(numero1 int, numero2 int) int{
+    suma := numero1 + numero2
+    retun suma
+}
+
+```
+
+
+
+
+
+
+---
+
 Estos conceptos forman la base para comenzar a desarrollar aplicaciones en Go de manera clara, tipada y predecible.
+
