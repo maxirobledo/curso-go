@@ -167,12 +167,55 @@ func sumaEnteros(numero1 int, numero2 int) int{
 
 ```
 
+Una funcion puede devolver multiples valores, por ejemplo
 
 
+```go
+
+func sumaResta(numero1 int, numero2 int) (int, int){
+    suma := numero1 + numero2
+    resta := numero1 - numero2
+    return suma, resta   
+}
+
+```
+
+La funcion anterior tambien se puede escribir de la siguiente manera
+
+```go
+
+func sumaResta(numero1 int, numero2 int) (suma int, resta int){
+    suma = numero1 + numero2
+    resta = numero1 - numero2   
+    return
+}
+
+```
+
+---
+
+## Estructuras de control
+
+Las estructuras de control permiten ejecutar codigo bajo diferentes circunstancias
+
+* if
+* for 
+* switch - case
+
+El bucle **for** es el unico blucle iterativo que se puede crear en el lenguaje de programacion **Go**
+
+```go
+for algunaCondicion{
+    hacer
+}
+```
 
 
 
 ---
 
 Estos conceptos forman la base para comenzar a desarrollar aplicaciones en Go de manera clara, tipada y predecible.
+
+
+
 
