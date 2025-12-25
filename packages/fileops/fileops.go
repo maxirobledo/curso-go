@@ -28,3 +28,25 @@ func WriteFloatToFile(value float64, fileName string) {
 	}
 	fmt.Println("Valor escrito correctamente en el archivo.")
 }
+
+// Function to append a struct's data to a file
+func WriteStructToFile(data string, fileName string) {
+	file, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Println("Error al abrir el archivo:", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(data)
+	if err != nil {
+		fmt.Println("Error al escribir el archivo:", err)
+		return
+	}
+
+	fmt.Println("Estructura agregada correctamente al archivo.")
+}
+
+func WiteJsonToFile(jsonData []byte, fileName string) {
+	os.WriteFile(fileName, jsonData, 0644)
+}

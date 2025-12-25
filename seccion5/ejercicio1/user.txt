@@ -1,0 +1,44 @@
+Nombre: Jhon
+Apellido: Doe
+Edad: 37
+---------------------
+Nombre: Max
+Apellido: Robledo
+Edad: 37
+---------------------
+Nombre: Pablo
+Apellido: Carretino
+Edad: 57
+---------------------
+Nombre: pepe
+Apellido: colazo
+Edad: 45
+---------------------
+Nombre: pimba
+Apellido: pimba
+Edad: 43
+---------------------
+Nombre: A
+Apellido: S
+Edad: 0
+---------------------
+Nombre: Javier
+Apellido: Milei
+Edad: 58
+---------------------
+Nombre: nicolas
+Apellido: anana
+Edad: dales
+---------------------
+Nombre: nicolas
+Apellido: banana
+Edad: 42
+---------------------
+Nombre: matias
+Apellido: ulito
+Edad: asd
+---------------------
+Nombre: pablito
+Apellido: golazo
+Edad: 44
+---------------------

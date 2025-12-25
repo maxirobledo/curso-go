@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/maxirobledo/curso-go/seccion3/ejercicio1/banco/fileops"
+	"github.com/maxirobledo/curso-go/packages/fileops"
 )
 
 const file = "saldos.txt"
