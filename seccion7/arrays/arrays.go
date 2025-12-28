@@ -12,4 +12,8 @@ func main() {
 	fmt.Println("Valor de la posicion numero 3:", prices[2])
 
 	fmt.Println("New Prices:", newPrrices)
+
+	for i, price := range prices {
+		fmt.Printf("El precio en la posicion %d es %.2f\n", i, price)
+	}
 }
