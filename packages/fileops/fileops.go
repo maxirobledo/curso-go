@@ -1,6 +1,8 @@
 package fileops
 
 import (
+	"bufio"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -49,4 +51,47 @@ func WriteStructToFile(data string, fileName string) {
 
 func WiteJsonToFile(jsonData []byte, fileName string) {
 	os.WriteFile(fileName, jsonData, 0644)
+}
+
+func ReadLines(path string) ([]string, error) {
+	file, err := os.Open(path)
+
+	if err != nil {
+		return nil, errors.New("No se pudo abrir el archivo")
+	}
+
+	scanner := bufio.NewScanner(file)
+
+	var lines []string
+
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+
+	err = scanner.Err()
+	if err != nil {
+		file.Close()
+		return nil, errors.New("Error al leer del archivo")
+	}
+
+	file.Close()
+	return lines, nil
+}
+
+func WriteJSON(path string, data interface{}) error {
+	file, err := os.Create(path)
+
+	if err != nil {
+		return errors.New("No se pudo crear el archivo")
+	}
+
+	encoder := json.NewEncoder(file)
+	err = encoder.Encode(data)
+
+	if err != nil {
+		return errors.New("No se pudo transformar el archivo data a JSON")
+	}
+
+	file.Close()
+	return nil
 }
