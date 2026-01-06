@@ -19,9 +19,13 @@ func NewTaxIncludesPriceJob(taxRate float64) *TaxIncludesPriceJob {
 	}
 }
 
-func (job *TaxIncludesPriceJob) Process() {
+func (job *TaxIncludesPriceJob) Process() error {
 
-	job.LoadData()
+	err := job.LoadData()
+
+	if err != nil {
+		return err
+	}
 
 	result := make(map[string]string)
 
@@ -34,22 +38,23 @@ func (job *TaxIncludesPriceJob) Process() {
 	job.TaxIncludesPrices = result
 
 	fileops.WriteJSON(fmt.Sprintf("result_%.0f.json", job.TaxRate*100), job)
+
+	return nil
 }
 
-func (job *TaxIncludesPriceJob) LoadData() {
+func (job *TaxIncludesPriceJob) LoadData() error {
 	lines, err := fileops.ReadLines("prices.txt")
 
 	if err != nil {
-		fmt.Println(err)
-		return
+		return err
 	}
 
 	prices, err := conversion.StringToFloat(lines)
 
 	if err != nil {
-		fmt.Println(err)
-		return
+		return err
 	}
 
 	job.InputPrices = prices
+	return nil
 }

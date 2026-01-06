@@ -4,6 +4,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/maxirobledo/curso-go/packages/prices"
 )
 
@@ -13,7 +15,12 @@ func main() {
 	for _, taxRate := range taxRates {
 		priceJob := prices.NewTaxIncludesPriceJob(taxRate)
 
-		priceJob.Process()
+		err := priceJob.Process()
+
+		if err != nil {
+			fmt.Println("No se pudo procesar la tarea.")
+			fmt.Println(err)
+		}
 
 	}
 }
