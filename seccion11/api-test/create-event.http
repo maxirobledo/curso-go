@@ -1,0 +1,21 @@
+POST http://localhost:8080/events
+Content-Type: application/json
+
+{
+    "name": "Me hice un pollo salteado",
+    "description": "Voy a comer rico",
+    "location": "MAXI",
+    "dateTime": "2026-01-12T21:20:00.000Z"
+
+}
+
+
+# POST http://localhost:8080/events
+# Content-Type: application/json
+
+# {
+#     "description": "A test event",
+#     "location": "A location event",
+#     "dateTime": "2025-01-10T15:40:00.000Z"
+
+# }

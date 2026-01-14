@@ -1,0 +1,10 @@
+PUT http://localhost:8080/events/1
+Content-Type: application/json
+
+{
+    "name": "Arranco el 2026 con nuevo desafio laboral en MELI",
+    "description": "Inicio de un nuevo de ciclo",
+    "location": "MAXI",
+    "dateTime": "2026-01-12T18:05:00.000Z"
+
+}
