@@ -1,6 +1,8 @@
 package models
 
 import (
+	"errors"
+
 	"github.com/maxirobledo/curso-go/packages/db"
 	"github.com/maxirobledo/curso-go/packages/utils"
 )
@@ -35,6 +37,25 @@ func (u *User) Save() error {
 
 	id, err := result.LastInsertId()
 	u.ID = id
+
+	return nil
+}
+
+func (u *User) ValidaCredentials() error {
+	query := "SELECT password FROM users WHERE email = ?"
+	row := db.DB.QueryRow(query, u.Email)
+
+	var retrievedPassword string
+	err := row.Scan(&retrievedPassword)
+
+	if err != nil {
+		return err
+	}
+
+	passwordIsValid := utils.CheckPasswordHash(u.Password, retrievedPassword)
+	if !passwordIsValid {
+		return errors.New("Invalid credentials")
+	}
 
 	return nil
 }
