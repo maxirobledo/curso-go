@@ -3,11 +3,9 @@ package routes
 import (
 	"net/http"
 	"strconv"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/maxirobledo/curso-go/packages/models"
-	"github.com/maxirobledo/curso-go/packages/utils"
 )
 
 func getEvents(context *gin.Context) {
@@ -36,29 +34,16 @@ func getEvent(context *gin.Context) {
 }
 
 func createEvent(context *gin.Context) {
-	token := context.Request.Header.Get("Authorization")
-	if token == "" {
-		context.JSON(http.StatusUnauthorized, gin.H{"message": "Token not provided"})
-		return
-	}
-
-	// Remove "Bearer " prefix if present
-	token = strings.TrimPrefix(token, "Bearer ")
-
-	userId, err := utils.ValidateToken(token)
-	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid token"})
-		return
-	}
 
 	var event models.Event
-	err = context.ShouldBindJSON(&event)
+	err := context.ShouldBindJSON(&event)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse request data."})
 		return
 	}
 
+	userId := context.GetInt64("userId")
 	event.UserID = int(userId)
 	err = event.Save()
 	if err != nil {
@@ -76,9 +61,21 @@ func updateEvent(context *gin.Context) {
 		return
 	}
 
-	_, err = models.GetEventByID(eventId)
+	event, err := models.GetEventByID(eventId)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not fetch event. Try again latter."})
+		return
+	}
+
+	userIdInterface, exists := context.Get("userId")
+	if !exists {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "User not authenticated"})
+		return
+	}
+
+	userId := userIdInterface.(int64)
+	if event.UserID != int(userId) {
+		context.JSON(http.StatusForbidden, gin.H{"message": "Not authorized to update this event"})
 		return
 	}
 
@@ -91,6 +88,7 @@ func updateEvent(context *gin.Context) {
 	}
 
 	updateEvent.ID = eventId
+	updateEvent.UserID = event.UserID // Preserve the original UserID
 
 	err = updateEvent.Update()
 	if err != nil {
@@ -112,6 +110,18 @@ func deleteEvent(context *gin.Context) {
 	event, err := models.GetEventByID(eventId)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not fetch event. Try again latter."})
+		return
+	}
+
+	userIdInterface, exists := context.Get("userId")
+	if !exists {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "User not authenticated"})
+		return
+	}
+
+	userId := userIdInterface.(int64)
+	if event.UserID != int(userId) {
+		context.JSON(http.StatusForbidden, gin.H{"message": "Not authorized to delete this event"})
 		return
 	}
 
