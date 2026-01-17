@@ -61,21 +61,9 @@ func updateEvent(context *gin.Context) {
 		return
 	}
 
-	event, err := models.GetEventByID(eventId)
+	_, err = models.GetEventByID(eventId)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not fetch event. Try again latter."})
-		return
-	}
-
-	userIdInterface, exists := context.Get("userId")
-	if !exists {
-		context.JSON(http.StatusUnauthorized, gin.H{"message": "User not authenticated"})
-		return
-	}
-
-	userId := userIdInterface.(int64)
-	if event.UserID != int(userId) {
-		context.JSON(http.StatusForbidden, gin.H{"message": "Not authorized to update this event"})
 		return
 	}
 
@@ -88,7 +76,6 @@ func updateEvent(context *gin.Context) {
 	}
 
 	updateEvent.ID = eventId
-	updateEvent.UserID = event.UserID // Preserve the original UserID
 
 	err = updateEvent.Update()
 	if err != nil {
